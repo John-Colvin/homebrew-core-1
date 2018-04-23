@@ -19,6 +19,16 @@ class Ldc < Formula
     sha256 "abd3dbef86edde7285bfbb7d66956341e5f2fca7445c876e1d8a525a8754650e" => :el_capitan
   end
 
+  devel do
+    url "https://github.com/ldc-developers/ldc/releases/download/v1.9.0-beta1/ldc-1.9.0-beta1-src.tar.gz"
+    sha256 "208fb4ab7484872d3f52dc0d206303003ba604226706507176d92f45b6c1b348"
+
+    resource "ldc-lts" do
+      url "https://github.com/ldc-developers/ldc/releases/download/v0.17.5/ldc-0.17.5-src.tar.gz"
+      sha256 "7aa540a135f9fa1ee9722cad73100a8f3600a07f9a11d199d8be68887cc90008"
+    end
+  end
+
   head do
     url "https://github.com/ldc-developers/ldc.git", :shallow => false
 
@@ -34,10 +44,6 @@ class Ldc < Formula
   depends_on "llvm@5"
 
   def install
-    # Fix the error:
-    # CMakeFiles/LDCShared.dir/build.make:68: recipe for target 'dmd2/id.h' failed
-    ENV.deparallelize if OS.linux?
-
     ENV.cxx11
     (buildpath/"ldc-lts").install resource("ldc-lts")
 
